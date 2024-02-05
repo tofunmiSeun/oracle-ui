@@ -6,6 +6,7 @@ import { Get } from '@/src/ApiClient';
 import { AxiosResponse } from 'axios';
 import WorkspaceCardView from '@/src/components/WorkspaceCardView';
 import CreateWorkspaceModal from '@/src/components/CreateWorkspaceModal';
+import Button from 'react-bootstrap/Button';
 
 export default function Home() {
   const [workspaces, setWorkspaces] = React.useState(Array<Workspace>())
@@ -31,10 +32,10 @@ export default function Home() {
       <div className='d-flex flex-column mb-4'>
         <p className="h1 mb-0">Workspaces</p>
         <div className='mt-2'>
-          <button type="button" className="btn btn-primary btn-sm"
+          <Button variant="primary" size='sm'
             onClick={onShowWorkspaceModalButtonClicked}>
             New workspace
-          </button>
+          </Button>
         </div>
       </div>
 

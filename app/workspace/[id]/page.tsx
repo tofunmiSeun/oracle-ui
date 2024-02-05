@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
 import EditWorkspaceModal from '@/src/components/EditWorkspaceModal';
 import ConfirmWorkspaceDeletionModal from '@/src/components/ConfirmWorkspaceDeletionModal';
+import DatasourcesListView from '@/src/components/DatasourcesListView';
 
 export default function Page() {
     const { id } = useParams();
@@ -52,29 +53,33 @@ export default function Page() {
             </ol>
         </nav>
 
-        {workspace && <div className='d-flex w-100'>
-            <div>
-                <h1 className={`mb-2 text-3xl font-semibold`}>
-                    {workspace.title}
-                </h1>
-                <p className={`m-0 text-sm opacity-50`}>
-                    {workspace.description}
-                </p>
+        {workspace && <div>
+            <div className='d-flex w-100 mb-5'>
+                <div>
+                    <h1 className={`mb-2 text-3xl font-semibold`}>
+                        {workspace.title}
+                    </h1>
+                    <p className={`m-0 text-sm opacity-50`}>
+                        {workspace.description}
+                    </p>
+                </div>
+
+                <div className='ms-auto'>
+                    <Stack direction="horizontal" gap={2}>
+                        <Button variant="outline-primary" size='sm'
+                            onClick={onShowEditWorkspaceModalButtonClicked}>
+                            Edit
+                        </Button>
+
+                        <Button variant="outline-danger" size='sm'
+                            onClick={onShowDeleteWorkspaceModalButtonClicked}>
+                            Delete
+                        </Button>
+                    </Stack>
+                </div>
             </div>
 
-            <div className='ms-auto'>
-                <Stack direction="horizontal" gap={2}>
-                    <Button variant="primary" size='sm'
-                        onClick={onShowEditWorkspaceModalButtonClicked}>
-                        Edit
-                    </Button>
-
-                    <Button variant="danger" size='sm'
-                        onClick={onShowDeleteWorkspaceModalButtonClicked}>
-                        Delete
-                    </Button>
-                </Stack>
-            </div>
+            <DatasourcesListView workspaceId={workspace.id} />
 
             <EditWorkspaceModal show={showEditWorkspaceModal}
                 workspace={workspace}
