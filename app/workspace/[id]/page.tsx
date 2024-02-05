@@ -9,17 +9,25 @@ import Link from "next/link";
 import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
 import EditWorkspaceModal from '@/src/components/EditWorkspaceModal';
+import ConfirmWorkspaceDeletionModal from '@/src/components/ConfirmWorkspaceDeletionModal';
 
 export default function Page() {
     const { id } = useParams();
     const [workspace, setWorkspace] = React.useState(undefined as Workspace | undefined)
     const [showEditWorkspaceModal, setShowEditWorkspaceModal] = React.useState(false);
+    const [showDeleteWorkspaceModal, setShowDeleteWorkspaceModal] = React.useState(false);
 
     const hideEditWorkspaceModal = () => setShowEditWorkspaceModal(false);
+    const hideDeleteWorkspaceModal = () => setShowDeleteWorkspaceModal(false);
 
-    const onShowWorkspaceModalButtonClicked = (e?: any) => {
+    const onShowEditWorkspaceModalButtonClicked = (e?: any) => {
         e?.preventDefault();
         setShowEditWorkspaceModal(true);
+    }
+
+    const onShowDeleteWorkspaceModalButtonClicked = (e?: any) => {
+        e?.preventDefault();
+        setShowDeleteWorkspaceModal(true);
     }
 
     const fetchWorkspaceDetails = React.useCallback(() => {
@@ -57,13 +65,14 @@ export default function Page() {
             <div className='ms-auto'>
                 <Stack direction="horizontal" gap={2}>
                     <Button variant="primary" size='sm'
-                        onClick={onShowWorkspaceModalButtonClicked}>
+                        onClick={onShowEditWorkspaceModalButtonClicked}>
                         Edit
                     </Button>
 
-                    {/* <Button as="a" variant="danger" size='sm'>
+                    <Button variant="danger" size='sm'
+                        onClick={onShowDeleteWorkspaceModalButtonClicked}>
                         Delete
-                    </Button> */}
+                    </Button>
                 </Stack>
             </div>
 
@@ -71,6 +80,10 @@ export default function Page() {
                 workspace={workspace}
                 handleClose={hideEditWorkspaceModal}
                 onWorkspaceEdited={fetchWorkspaceDetails} />
+
+            <ConfirmWorkspaceDeletionModal workspaceId={workspace.id}
+                show={showDeleteWorkspaceModal}
+                handleClose={hideDeleteWorkspaceModal} />
         </div>}
     </div>;
 }
