@@ -27,7 +27,7 @@ export default function DatasourceCardView(props: Props) {
                     {datasource.website}
                 </a>
 
-                <div className='d-flex w-100'>
+                <div className='d-flex w-100 mt-3'>
                     <div className='ms-auto'>
                         <Stack direction="horizontal" gap={2}>
                             <Button variant="outline-danger" size='sm'
