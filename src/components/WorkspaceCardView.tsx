@@ -20,7 +20,7 @@ export default function WorkspaceCardView(props: Props) {
             rounded rounded-1 p-4 cursor-pointer'>
                 <p className="h3 mb-2">{workspace.title}</p>
                 <p className={`m-0 text-sm opacity-50`}
-                    style={{ maxWidth: 300 }}>
+                    style={{ maxWidth: 300, height: '3em' }}>
                     {workspace.description}
                 </p>
             </div>
