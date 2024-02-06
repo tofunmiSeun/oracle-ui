@@ -5,6 +5,7 @@ import { Datasource } from "../types/Datasource";
 import { AxiosResponse } from 'axios';
 import DatasourceCardView from "./DatasourceCardView";
 import CreateDatasourceModal from "./CreateDatasourceModal";
+import { FileEarmarkPlus } from "react-bootstrap-icons";
 
 type Props = {
     workspaceId: string
@@ -33,12 +34,13 @@ export default function DatasourcesListView(props: Props) {
     }, [fetchDatasources]);
 
     return <div>
-        <div className="d-flex mb-3">
+        <div className="d-flex flex-column mb-4">
             <p className="h4">Datasources</p>
-            <div className='ms-2'>
+            <div>
                 <Button variant="primary" size='sm'
                     onClick={onShowCreateDatasourceModalButtonClicked}>
-                    Add
+                    <FileEarmarkPlus />
+                    <span className="ms-2">Add datasource</span>
                 </Button>
             </div>
         </div>

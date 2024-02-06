@@ -7,6 +7,7 @@ import { AxiosResponse } from 'axios';
 import WorkspaceCardView from '@/src/components/WorkspaceCardView';
 import CreateWorkspaceModal from '@/src/components/CreateWorkspaceModal';
 import Button from 'react-bootstrap/Button';
+import { FolderPlus } from 'react-bootstrap-icons';
 
 export default function Home() {
   const [workspaces, setWorkspaces] = React.useState(Array<Workspace>())
@@ -34,7 +35,8 @@ export default function Home() {
         <div className='mt-2'>
           <Button variant="primary" size='sm'
             onClick={onShowWorkspaceModalButtonClicked}>
-            New workspace
+            <FolderPlus />
+            <span className='ms-2'>Add workspace</span>
           </Button>
         </div>
       </div>

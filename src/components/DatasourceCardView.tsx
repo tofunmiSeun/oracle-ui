@@ -3,6 +3,7 @@ import { Datasource } from '../types/Datasource';
 import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
 import ConfirmDatasourceDeletionModal from './ConfirmDatasourceDeletionModal';
+import { Trash } from 'react-bootstrap-icons';
 
 type Props = {
     datasource: Datasource
@@ -32,7 +33,7 @@ export default function DatasourceCardView(props: Props) {
                         <Stack direction="horizontal" gap={2}>
                             <Button variant="outline-danger" size='sm'
                                 onClick={onShowDeleteDatasourceModalButtonClicked}>
-                                Delete
+                                <Trash />
                             </Button>
                         </Stack>
                     </div>

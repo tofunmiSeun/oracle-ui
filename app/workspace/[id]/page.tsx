@@ -11,6 +11,7 @@ import Stack from 'react-bootstrap/Stack';
 import EditWorkspaceModal from '@/src/components/EditWorkspaceModal';
 import ConfirmWorkspaceDeletionModal from '@/src/components/ConfirmWorkspaceDeletionModal';
 import DatasourcesListView from '@/src/components/DatasourcesListView';
+import { Pencil, Trash } from 'react-bootstrap-icons';
 
 export default function Page() {
     const { id } = useParams();
@@ -64,16 +65,16 @@ export default function Page() {
                     </p>
                 </div>
 
-                <div className='ms-auto'>
+                <div className='ms-3 mt-2'>
                     <Stack direction="horizontal" gap={2}>
                         <Button variant="outline-primary" size='sm'
                             onClick={onShowEditWorkspaceModalButtonClicked}>
-                            Edit
+                            <Pencil />
                         </Button>
 
                         <Button variant="outline-danger" size='sm'
                             onClick={onShowDeleteWorkspaceModalButtonClicked}>
-                            Delete
+                            <Trash />
                         </Button>
                     </Stack>
                 </div>
