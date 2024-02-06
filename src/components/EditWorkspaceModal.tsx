@@ -28,7 +28,7 @@ export default function EditWorkspaceModal(props: Props) {
 
     const editWorkspace = React.useCallback((e?: any) => {
         e?.preventDefault();
-        Post(`/namespace/${props.workspace.id}`, { title, description }).then(() => {
+        Post(`/workspace/${props.workspace.id}`, { title, description }).then(() => {
             props.handleClose();
             props.onWorkspaceEdited();
         })

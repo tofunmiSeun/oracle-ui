@@ -15,7 +15,7 @@ export default function ConfirmWorkspaceDeletionModal(props: Props) {
 
     const deleteWorkspace = React.useCallback((e?: any) => {
         e?.preventDefault();
-        Delete(`/namespace/${props.workspaceId}`).then(() => {
+        Delete(`/workspace/${props.workspaceId}`).then(() => {
             props.handleClose();
             router.back();
         })

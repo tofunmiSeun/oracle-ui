@@ -21,7 +21,7 @@ export default function Home() {
   }
 
   React.useEffect(() => {
-    Get('/namespace').then((response: AxiosResponse) => {
+    Get('/workspace').then((response: AxiosResponse) => {
       const data = response.data as Array<Workspace>
       const sorted = data.sort((a, b) => a.title.localeCompare(b.title.toLowerCase()));
       setWorkspaces(sorted);

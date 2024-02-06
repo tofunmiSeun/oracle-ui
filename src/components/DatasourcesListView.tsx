@@ -37,7 +37,7 @@ export default function DatasourcesListView(props: Props) {
         <div className="d-flex flex-column mb-4">
             <p className="h4">Datasources</p>
             <div>
-                <Button variant="primary" size='sm'
+                <Button variant="secondary" size='sm'
                     onClick={onShowCreateDatasourceModalButtonClicked}>
                     <FileEarmarkPlus />
                     <span className="ms-2">Add datasource</span>

@@ -11,16 +11,19 @@ import Stack from 'react-bootstrap/Stack';
 import EditWorkspaceModal from '@/src/components/EditWorkspaceModal';
 import ConfirmWorkspaceDeletionModal from '@/src/components/ConfirmWorkspaceDeletionModal';
 import DatasourcesListView from '@/src/components/DatasourcesListView';
-import { Pencil, Trash } from 'react-bootstrap-icons';
+import { ChatDots, Pencil, Trash } from 'react-bootstrap-icons';
+import WorkspaceChatView from '@/src/components/WorkspaceChatView';
 
 export default function Page() {
     const { id } = useParams();
     const [workspace, setWorkspace] = React.useState(undefined as Workspace | undefined)
     const [showEditWorkspaceModal, setShowEditWorkspaceModal] = React.useState(false);
     const [showDeleteWorkspaceModal, setShowDeleteWorkspaceModal] = React.useState(false);
+    const [showChatView, setShowChatView] = React.useState(false);
 
     const hideEditWorkspaceModal = () => setShowEditWorkspaceModal(false);
     const hideDeleteWorkspaceModal = () => setShowDeleteWorkspaceModal(false);
+    const hideChatView = () => setShowChatView(false);
 
     const onShowEditWorkspaceModalButtonClicked = (e?: any) => {
         e?.preventDefault();
@@ -32,8 +35,13 @@ export default function Page() {
         setShowDeleteWorkspaceModal(true);
     }
 
+    const onShowWorkspaceChatViewButtonClicked = (e?: any) => {
+        e?.preventDefault();
+        setShowChatView(true);
+    }
+
     const fetchWorkspaceDetails = React.useCallback(() => {
-        Get(`/namespace/${id}`).then((response: AxiosResponse) => {
+        Get(`/workspace/${id}`).then((response: AxiosResponse) => {
             const data = response.data as Workspace
             setWorkspace(data);
         });
@@ -55,7 +63,7 @@ export default function Page() {
         </nav>
 
         {workspace && <div>
-            <div className='d-flex w-100 mb-5'>
+            <div className='d-flex w-100 mb-4'>
                 <div>
                     <h1 className={`mb-2 text-3xl font-semibold`}>
                         {workspace.title}
@@ -67,7 +75,7 @@ export default function Page() {
 
                 <div className='ms-3 mt-2'>
                     <Stack direction="horizontal" gap={2}>
-                        <Button variant="outline-primary" size='sm'
+                        <Button variant="outline-secondary" size='sm'
                             onClick={onShowEditWorkspaceModalButtonClicked}>
                             <Pencil />
                         </Button>
@@ -80,7 +88,21 @@ export default function Page() {
                 </div>
             </div>
 
-            <DatasourcesListView workspaceId={workspace.id} />
+            <div className='mb-4'>
+                <Button variant="primary"
+                    onClick={onShowWorkspaceChatViewButtonClicked}>
+                    <ChatDots />
+                    <span className='ms-2'>
+                        Chat with my data
+                    </span>
+                </Button>
+            </div>
+
+            <hr />
+
+            <div className='mt-4'>
+                <DatasourcesListView workspaceId={workspace.id} />
+            </div>
 
             <EditWorkspaceModal show={showEditWorkspaceModal}
                 workspace={workspace}
@@ -90,6 +112,9 @@ export default function Page() {
             <ConfirmWorkspaceDeletionModal workspaceId={workspace.id}
                 show={showDeleteWorkspaceModal}
                 handleClose={hideDeleteWorkspaceModal} />
+
+            <WorkspaceChatView show={showChatView} handleClose={hideChatView}
+                workspace={workspace} />
         </div>}
     </div>;
 }

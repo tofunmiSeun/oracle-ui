@@ -22,7 +22,7 @@ export default function CreateWorkspaceModal(props: Props) {
 
     const createWorkspace = React.useCallback((e?: any) => {
         e?.preventDefault();
-        Post('/namespace', { title, description }).then((response) => {
+        Post('/workspace', { title, description }).then((response) => {
             const workspaceId = response.data as string;
             props.handleClose();
             router.push(`/workspace/${workspaceId}`);
