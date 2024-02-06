@@ -73,7 +73,7 @@ export default function Page() {
                     </p>
                 </div>
 
-                <div className='ms-3 mt-2'>
+                <div className='ms-1 mt-2'>
                     <Stack direction="horizontal" gap={2}>
                         <Button variant="outline-secondary" size='sm'
                             onClick={onShowEditWorkspaceModalButtonClicked}>

@@ -40,13 +40,13 @@ export default function EditWorkspaceModal(props: Props) {
         </Modal.Header>
         <Modal.Body>
             <Form>
-                <Form.Group className="mb-3" controlId="createWorkspaceForm.title">
+                <Form.Group className="mb-3" controlId="editWorkspaceForm.title">
                     <Form.Label>Title</Form.Label>
                     <Form.Control type="text" placeholder="Favourite coursework"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)} />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="createWorkspaceForm.description">
+                <Form.Group className="mb-3" controlId="editWorkspaceForm.description">
                     <Form.Label>Description</Form.Label>
                     <Form.Control as="textarea" rows={3}
                         value={description}
