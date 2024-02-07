@@ -50,9 +50,12 @@ export default function ChatBubble(props: Props) {
             {!isAIChatMessage && <PersonCircle />}
         </div>
         <div className={chatBubbleInnerClassName}>
-            <p className='mb-0 text-right'>
-                {chatMessage.message}
-            </p>
+            <div>
+                <p className='mb-0'
+                    style={{ whiteSpace: 'break-spaces' }}>
+                    {chatMessage.message}
+                </p>
+            </div>
         </div>
     </div>
 }
