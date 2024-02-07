@@ -1,6 +1,7 @@
 import React from 'react'
 import { ChatMessage } from "@/src/types/ChatMessage";
 import { PersonCircle, Robot } from 'react-bootstrap-icons';
+import Moment from 'react-moment';
 
 type Props = {
     chatMessage: ChatMessage
@@ -56,6 +57,10 @@ export default function ChatBubble(props: Props) {
                     {chatMessage.message}
                 </p>
             </div>
+        </div>
+        <div className={`${chatBubbleAvatarClassName} small text-muted`}>
+            <Moment ago from={chatMessage.created_at * 1000}></Moment>
+            <span className='ms-1'>ago</span>
         </div>
     </div>
 }
