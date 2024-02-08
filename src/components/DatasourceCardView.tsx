@@ -1,7 +1,6 @@
 import React from 'react'
 import { Datasource } from '../types/Datasource';
 import Button from 'react-bootstrap/Button';
-import Stack from 'react-bootstrap/Stack';
 import ConfirmDatasourceDeletionModal from './ConfirmDatasourceDeletionModal';
 import { Trash } from 'react-bootstrap-icons';
 
@@ -22,26 +21,24 @@ export default function DatasourceCardView(props: Props) {
     }
 
     return (
-        <div className='border border-1 border-secondary rounded rounded-1 p-3'>
-            <a className='text-break' href={datasource.website} target='blank'>
-                {datasource.website}
-            </a>
-
-            <div className='d-flex w-100 mt-3'>
-                <div className='ms-auto'>
-                    <Stack direction="horizontal" gap={2}>
-                        <Button variant="outline-danger" size='sm'
-                            onClick={onShowDeleteDatasourceModalButtonClicked}>
-                            <Trash />
-                        </Button>
-                    </Stack>
-                </div>
-            </div>
+        <>
+            <tr>
+                <td><a className='text-break' href={datasource.website} target='blank'>
+                    {datasource.website}
+                </a>
+                </td>
+                <td>
+                    <Button variant="outline-danger" size='sm'
+                        onClick={onShowDeleteDatasourceModalButtonClicked}>
+                        <Trash />
+                    </Button>
+                </td>
+            </tr>
 
             <ConfirmDatasourceDeletionModal datasourceId={datasource.id}
                 show={showDeleteDatasourceModal}
                 handleClose={hideDeleteDatasourceModal}
                 handleDatasourceDeleted={props.handleDatasourceDeleted} />
-        </div>
+        </>
     );
 }

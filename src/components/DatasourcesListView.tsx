@@ -34,7 +34,7 @@ export default function DatasourcesListView(props: Props) {
     }, [fetchDatasources]);
 
     return <div>
-        <div className="d-flex mb-3">
+        <div className="d-flex">
             <p className="h4">Datasources</p>
             <div className="ms-2">
                 <Button variant="outline-secondary" size='sm'
@@ -44,12 +44,14 @@ export default function DatasourcesListView(props: Props) {
             </div>
         </div>
 
-        <div className="row g-4">
-            {datasources.map((d) => (<div className="col-12" key={d.id}>
-                <DatasourceCardView datasource={d}
+        <table className="table">
+            <tbody>
+                {datasources.map((d, i) => (<DatasourceCardView key={d.id}
+                    datasource={d}
                     handleDatasourceDeleted={fetchDatasources} />
-            </div>))}
-        </div>
+                ))}
+            </tbody>
+        </table>
 
         <CreateDatasourceModal show={showCreateDatasourceModal}
             workspaceId={props.workspaceId}

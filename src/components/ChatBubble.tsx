@@ -12,7 +12,7 @@ export default function ChatBubble(props: Props) {
     const isAIChatMessage = React.useMemo(() => chatMessage.sender === 'AI', [chatMessage]);
 
     const chatBubbleContainerClassName = React.useMemo((): string => {
-        let result = 'w-75 d-flex flex-column mb-3';
+        let result = 'w-auto d-flex flex-column mb-3';
 
         if (isAIChatMessage) result += ' me-auto '
         else result += ' ms-auto ';
