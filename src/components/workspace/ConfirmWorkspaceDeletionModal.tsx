@@ -1,7 +1,7 @@
 import React from "react"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { Delete } from "../ApiClient";
+import { Delete } from "../../ApiClient";
 import { useRouter } from "next/navigation";
 
 type Props = {

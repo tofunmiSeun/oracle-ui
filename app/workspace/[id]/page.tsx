@@ -7,12 +7,11 @@ import { AxiosResponse } from 'axios';
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Button from 'react-bootstrap/Button';
-import Stack from 'react-bootstrap/Stack';
-import EditWorkspaceModal from '@/src/components/EditWorkspaceModal';
-import ConfirmWorkspaceDeletionModal from '@/src/components/ConfirmWorkspaceDeletionModal';
-import DatasourcesListView from '@/src/components/DatasourcesListView';
+import EditWorkspaceModal from '@/src/components/workspace/EditWorkspaceModal';
+import ConfirmWorkspaceDeletionModal from '@/src/components/workspace/ConfirmWorkspaceDeletionModal';
+import DatasourcesSection from '@/src/components/datasource/DatasourcesSection';
 import { ArrowLeft, Pencil, Trash } from 'react-bootstrap-icons';
-import WorkspaceChatView from '@/src/components/WorkspaceChatView';
+import WorkspaceChatView from '@/src/components/workspace/chat/WorkspaceChatView';
 
 export default function Page() {
     const { id } = useParams();
@@ -85,7 +84,7 @@ export default function Page() {
                     </div>
 
                     <div className='border-top mt-4 pt-4'>
-                        <DatasourcesListView workspaceId={workspace.id} />
+                        <DatasourcesSection workspaceId={workspace.id} />
                     </div>
                 </div>
 

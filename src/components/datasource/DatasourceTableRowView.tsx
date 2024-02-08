@@ -1,5 +1,5 @@
 import React from 'react'
-import { Datasource } from '../types/Datasource';
+import { Datasource } from '../../types/Datasource';
 import Button from 'react-bootstrap/Button';
 import ConfirmDatasourceDeletionModal from './ConfirmDatasourceDeletionModal';
 import { Trash } from 'react-bootstrap-icons';
@@ -9,7 +9,7 @@ type Props = {
     handleDatasourceDeleted: () => void
 }
 
-export default function DatasourceCardView(props: Props) {
+export default function DatasourceTableRowView(props: Props) {
     const datasource = props.datasource;
 
     const [showDeleteDatasourceModal, setShowDeleteDatasourceModal] = React.useState(false);

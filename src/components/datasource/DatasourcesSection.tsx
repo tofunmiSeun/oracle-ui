@@ -1,9 +1,9 @@
 import React from "react"
 import Button from 'react-bootstrap/Button';
 import { Get } from '@/src/ApiClient';
-import { Datasource } from "../types/Datasource";
+import { Datasource } from "../../types/Datasource";
 import { AxiosResponse } from 'axios';
-import DatasourceCardView from "./DatasourceCardView";
+import DatasourceTableRowView from "./DatasourceTableRowView";
 import CreateDatasourceModal from "./CreateDatasourceModal";
 import { FileEarmarkPlusFill } from "react-bootstrap-icons";
 
@@ -11,7 +11,7 @@ type Props = {
     workspaceId: string
 }
 
-export default function DatasourcesListView(props: Props) {
+export default function DatasourcesSection(props: Props) {
     const [datasources, setDatasources] = React.useState(Array<Datasource>());
     const [showCreateDatasourceModal, setShowCreateDatasourceModal] = React.useState(false);
 
@@ -46,7 +46,7 @@ export default function DatasourcesListView(props: Props) {
 
         <table className="table">
             <tbody>
-                {datasources.map((d, i) => (<DatasourceCardView key={d.id}
+                {datasources.map((d, i) => (<DatasourceTableRowView key={d.id}
                     datasource={d}
                     handleDatasourceDeleted={fetchDatasources} />
                 ))}

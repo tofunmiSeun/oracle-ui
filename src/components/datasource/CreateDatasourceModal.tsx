@@ -2,7 +2,7 @@ import React from "react"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { Post } from "../ApiClient";
+import { Post } from "../../ApiClient";
 
 type Props = {
     show: boolean
