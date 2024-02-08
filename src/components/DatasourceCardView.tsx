@@ -22,28 +22,26 @@ export default function DatasourceCardView(props: Props) {
     }
 
     return (
-        <div key={datasource.id} className="col-lg-4 ">
-            <div className='border border-1 border-secondary rounded rounded-1 p-3'>
-                <a href={datasource.website} target='blank'>
-                    {datasource.website}
-                </a>
+        <div className='border border-1 border-secondary rounded rounded-1 p-3'>
+            <a className='text-break' href={datasource.website} target='blank'>
+                {datasource.website}
+            </a>
 
-                <div className='d-flex w-100 mt-3'>
-                    <div className='ms-auto'>
-                        <Stack direction="horizontal" gap={2}>
-                            <Button variant="outline-danger" size='sm'
-                                onClick={onShowDeleteDatasourceModalButtonClicked}>
-                                <Trash />
-                            </Button>
-                        </Stack>
-                    </div>
+            <div className='d-flex w-100 mt-3'>
+                <div className='ms-auto'>
+                    <Stack direction="horizontal" gap={2}>
+                        <Button variant="outline-danger" size='sm'
+                            onClick={onShowDeleteDatasourceModalButtonClicked}>
+                            <Trash />
+                        </Button>
+                    </Stack>
                 </div>
-
-                <ConfirmDatasourceDeletionModal datasourceId={datasource.id}
-                    show={showDeleteDatasourceModal}
-                    handleClose={hideDeleteDatasourceModal}
-                    handleDatasourceDeleted={props.handleDatasourceDeleted} />
             </div>
+
+            <ConfirmDatasourceDeletionModal datasourceId={datasource.id}
+                show={showDeleteDatasourceModal}
+                handleClose={hideDeleteDatasourceModal}
+                handleDatasourceDeleted={props.handleDatasourceDeleted} />
         </div>
     );
 }

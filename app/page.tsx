@@ -29,7 +29,7 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div className='px-5 py-4'>
       <div className='d-flex flex-column mb-4'>
         <p className="h1 mb-0">Workspaces</p>
         <div className='mt-2'>
@@ -47,6 +47,6 @@ export default function Home() {
 
       <CreateWorkspaceModal show={showCreateWorkspaceModal}
         handleClose={hideCreateWorkspaceModal} />
-    </>
+    </div>
   );
 }

@@ -3,7 +3,6 @@ import { Workspace } from "@/src/types/Workspace";
 import { ChatMessage } from "@/src/types/ChatMessage";
 import { Get, Post } from '@/src/ApiClient';
 import { AxiosResponse } from 'axios';
-import Offcanvas from 'react-bootstrap/Offcanvas';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Stack from 'react-bootstrap/Stack';
@@ -11,13 +10,11 @@ import { Send } from 'react-bootstrap-icons';
 import ChatBubble from './ChatBubble';
 
 type Props = {
-    show: boolean
     workspace: Workspace
-    handleClose: () => void
 }
 
 export default function WorkspaceChatView(props: Props) {
-    const { show, handleClose, workspace } = props;
+    const { workspace } = props;
     const [chatMessages, setChatMessages] = React.useState(Array<ChatMessage>());
     const [chatText, setChatText] = React.useState('');
 
@@ -42,31 +39,26 @@ export default function WorkspaceChatView(props: Props) {
 
     React.useEffect(() => fetchChatMessages(), [fetchChatMessages]);
 
-    return <Offcanvas show={show} placement='end' onHide={handleClose}>
-        <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Chat</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body className='p-2'>
-            <div className='d-flex h-100 flex-column'>
-                <div className='overflow-scroll mt-auto d-flex flex-column-reverse pe-3'>
-                    {chatMessages.map((c) => (
-                        <ChatBubble key={c.id} chatMessage={c} />
-                    ))}
-                </div>
-                <div className='mt-0'>
-                    <hr />
-                    <Stack direction="horizontal" gap={2}>
-                        <Form.Control
-                            placeholder="Ask your question here..."
-                            value={chatText}
-                            onChange={(e) => setChatText(e.target.value)} />
-                        <Button variant="secondary" disabled={isSubmitButtonDisabled}
-                            onClick={askAI}>
-                            <Send />
-                        </Button>
-                    </Stack>
-                </div>
+    return <div>
+        <div className='overflow-scroll p-3' style={{ height: 'calc(100vh - 120px)' }}>
+            <div className='d-flex flex-column-reverse'>
+                {chatMessages.map((c) => (
+                    <ChatBubble key={c.id} chatMessage={c} />
+                ))}
             </div>
-        </Offcanvas.Body>
-    </Offcanvas>;
+        </div>
+
+        <div className='mt-0 p-3'>
+            <Stack direction="horizontal" gap={2}>
+                <Form.Control
+                    placeholder="Ask your question here..."
+                    value={chatText}
+                    onChange={(e) => setChatText(e.target.value)} />
+                <Button variant="secondary" disabled={isSubmitButtonDisabled}
+                    onClick={askAI}>
+                    <Send />
+                </Button>
+            </Stack>
+        </div>
+    </div>
 }

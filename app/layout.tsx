@@ -19,9 +19,7 @@ export default function RootLayout({
     <html lang="en" data-bs-theme="dark">
       <body className={inter.className}>
         <NavBar />
-        <div className='px-5 py-4'>
-          {children}
-        </div>
+        {children}
       </body>
     </html>
   );
