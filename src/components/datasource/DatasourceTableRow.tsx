@@ -9,7 +9,7 @@ type Props = {
     handleDatasourceDeleted: () => void
 }
 
-export default function DatasourceTableRowView(props: Props) {
+export default function DatasourceTableRow(props: Props) {
     const datasource = props.datasource;
 
     const [showDeleteDatasourceModal, setShowDeleteDatasourceModal] = React.useState(false);
@@ -23,9 +23,10 @@ export default function DatasourceTableRowView(props: Props) {
     return (
         <>
             <tr>
-                <td><a className='text-break' href={datasource.website} target='blank'>
-                    {datasource.website}
-                </a>
+                <td>
+                    <a className='text-break' href={datasource.website} target='blank'>
+                        {datasource.website}
+                    </a>
                 </td>
                 <td>
                     <Button variant="outline-danger" size='sm'

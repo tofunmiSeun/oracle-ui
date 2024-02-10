@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import { Get } from '@/src/ApiClient';
 import { Datasource } from "../../types/Datasource";
 import { AxiosResponse } from 'axios';
-import DatasourceTableRowView from "./DatasourceTableRowView";
+import DatasourceTableRow from "./DatasourceTableRow";
 import CreateDatasourceModal from "./CreateDatasourceModal";
 import { FileEarmarkPlusFill } from "react-bootstrap-icons";
 
@@ -46,7 +46,7 @@ export default function DatasourcesSection(props: Props) {
 
         <table className="table">
             <tbody>
-                {datasources.map((d, i) => (<DatasourceTableRowView key={d.id}
+                {datasources.map((d, i) => (<DatasourceTableRow key={d.id}
                     datasource={d}
                     handleDatasourceDeleted={fetchDatasources} />
                 ))}
