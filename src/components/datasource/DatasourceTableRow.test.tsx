@@ -17,5 +17,6 @@ describe('DatasourceTableRow', () => {
 
         const messageElement = getByTestId(/datasource_123_website/i);
         expect(messageElement).toBeTruthy();
+        expect(messageElement.textContent).toContain('example.website.com');
     });
 });
