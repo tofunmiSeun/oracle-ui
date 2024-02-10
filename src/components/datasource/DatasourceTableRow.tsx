@@ -24,7 +24,9 @@ export default function DatasourceTableRow(props: Props) {
         <>
             <tr>
                 <td>
-                    <a className='text-break' href={datasource.website} target='blank'>
+                    <a data-testId={`${datasource.id}_website`}
+                        className='text-break'
+                        href={datasource.website} target='blank'>
                         {datasource.website}
                     </a>
                 </td>
