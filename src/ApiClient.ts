@@ -1,21 +1,53 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import React from "react";
 
-const serverUrl = process.env.NEXT_PUBLIC_SERVER_BASE_URL;
+const defaultAxiosConfig: AxiosRequestConfig = {
+  baseURL: process.env.NEXT_PUBLIC_SERVER_BASE_URL
+};
 
-function getDefaultAxiosConfig(): AxiosRequestConfig {
-  return {
-    baseURL: serverUrl
-  };
+type Method = 'get' | 'post' | 'delete'
+
+type ApiClient<T> = {
+  isBusy: boolean
+  errorMessage: string | undefined
+  data: T | undefined
+  dispatch: (request?: any) => void
 }
 
-export async function Post(url: string, body: any = undefined) {
-  return axios.post(url, body, getDefaultAxiosConfig());
-}
+export function useApiClient<T>(method: Method, uri: string, successHandler?: (data: T) => void): ApiClient<T> {
+  const [isBusy, setBusy] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState(undefined as string | undefined);
+  const [data, setData] = React.useState(undefined as T | undefined);
 
-export async function Get(url: string) {
-  return axios.get(url, getDefaultAxiosConfig());
-}
+  React.useEffect(() => {
+    console.log(`hi - ${uri}`)
+  }, [uri]);
 
-export async function Delete(url: string) {
-  return axios.delete(url, getDefaultAxiosConfig());
+  const dispatch = React.useCallback((requestBody?: any) => {
+    setBusy(true);
+    setErrorMessage(undefined);
+
+    let promise: Promise<AxiosResponse<any, any>>;
+    if (method === 'post') {
+      promise = axios.post(uri, requestBody, defaultAxiosConfig);
+    } else if (method === 'delete') {
+      promise = axios.delete(uri, defaultAxiosConfig);
+    } else {
+      promise = axios.get(uri, defaultAxiosConfig);
+    }
+
+    promise.then((response: AxiosResponse<any, any>) => {
+      setBusy(false);
+      if (response.data) {
+        const data = response.data as T
+        setData(data);
+        if (successHandler) successHandler(data);
+      }
+    }).catch((error: any) => {
+      setBusy(false);
+      setErrorMessage(JSON.stringify(error));
+    })
+  }, [method, uri, successHandler]);
+
+  return { isBusy, errorMessage, data, dispatch };
 }

@@ -2,7 +2,7 @@ import React from "react"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { Post } from "../../ApiClient";
+import { useApiClient } from "../../ApiClient";
 
 type Props = {
     show: boolean
@@ -21,16 +21,20 @@ export default function CreateDatasourceModal(props: Props) {
         return !urlPattern.test(website);
     }, [website]);
 
-    const createDatasource = React.useCallback((e?: any) => {
+    const onDatasourceCreated = () => {
+        props.handleClose();
+        props.onDatasourceCreated();
+    }
+
+    const { dispatch: createDatasource } = useApiClient<void>('post', '/datasource', onDatasourceCreated)
+
+    const onSubmitButtonClicked = React.useCallback((e?: any) => {
         e?.preventDefault();
 
         const requestBody = { workspace_id: props.workspaceId, website }
+        createDatasource(requestBody);
 
-        Post('/datasource', requestBody).then(() => {
-            props.handleClose();
-            props.onDatasourceCreated();
-        })
-    }, [website, props]);
+    }, [website, props, createDatasource]);
 
     return <Modal show={props.show} onHide={props.handleClose}>
         <Modal.Header closeButton>
@@ -49,7 +53,7 @@ export default function CreateDatasourceModal(props: Props) {
         <Modal.Footer>
             <Button variant="primary" size="sm"
                 disabled={isSubmitButtonDisabled}
-                onClick={createDatasource}>
+                onClick={onSubmitButtonClicked}>
                 Save
             </Button>
         </Modal.Footer>

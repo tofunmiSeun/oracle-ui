@@ -2,8 +2,7 @@
 
 import React from 'react'
 import { Workspace } from "@/src/types/Workspace";
-import { Get } from '@/src/ApiClient';
-import { AxiosResponse } from 'axios';
+import { useApiClient } from '@/src/ApiClient';
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Button from 'react-bootstrap/Button';
@@ -15,9 +14,11 @@ import WorkspaceChatView from '@/src/components/workspace/chat/WorkspaceChatView
 
 export default function Page() {
     const { id } = useParams();
-    const [workspace, setWorkspace] = React.useState(undefined as Workspace | undefined)
     const [showEditWorkspaceModal, setShowEditWorkspaceModal] = React.useState(false);
     const [showDeleteWorkspaceModal, setShowDeleteWorkspaceModal] = React.useState(false);
+
+    const fetchWorkspaceDetailsApiClient = useApiClient<Workspace>('get', `/workspace/${id}`);
+    const { data: workspace, dispatch: fetchWorkspaceDetails } = fetchWorkspaceDetailsApiClient;
 
     const hideEditWorkspaceModal = () => setShowEditWorkspaceModal(false);
     const hideDeleteWorkspaceModal = () => setShowDeleteWorkspaceModal(false);
@@ -31,13 +32,6 @@ export default function Page() {
         e?.preventDefault();
         setShowDeleteWorkspaceModal(true);
     }
-
-    const fetchWorkspaceDetails = React.useCallback(() => {
-        Get(`/workspace/${id}`).then((response: AxiosResponse) => {
-            const data = response.data as Workspace
-            setWorkspace(data);
-        });
-    }, [id]);
 
     React.useEffect(() => {
         fetchWorkspaceDetails();

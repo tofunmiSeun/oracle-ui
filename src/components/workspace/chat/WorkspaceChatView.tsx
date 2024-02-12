@@ -1,8 +1,7 @@
 import React from 'react'
 import { Workspace } from "@/src/types/Workspace";
 import { ChatMessage } from "@/src/types/ChatMessage";
-import { Get, Post } from '@/src/ApiClient';
-import { AxiosResponse } from 'axios';
+import { useApiClient } from '@/src/ApiClient';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Stack from 'react-bootstrap/Stack';
@@ -15,34 +14,32 @@ type Props = {
 
 export default function WorkspaceChatView(props: Props) {
     const { workspace } = props;
-    const [chatMessages, setChatMessages] = React.useState(Array<ChatMessage>());
     const [chatText, setChatText] = React.useState('');
+
+    const fetchChatMessagesApiClient = useApiClient<Array<ChatMessage>>('get', `/chat-messages/${workspace.id}`);
+    const { data: chatMessages, dispatch: fetchChatMessages } = fetchChatMessagesApiClient;
 
     const isSubmitButtonDisabled = React.useMemo(() => {
         return chatText.trim().length < 5;
-    }, [chatText])
+    }, [chatText]);
 
-    const fetchChatMessages = React.useCallback(() => {
-        Get(`/chat-messages/${workspace.id}`).then((response: AxiosResponse) => {
-            const data = response.data as Array<ChatMessage>
-            setChatMessages(data);
-        });
-    }, [workspace])
+    const onChatMessageSent = () => {
+        setChatText('');
+        fetchChatMessages();
+    }
+    const { dispatch: sendChatMessage } = useApiClient<void>('post', `/chat-messages/ask-ai/${workspace.id}`, onChatMessageSent);
 
     const askAI = React.useCallback((e?: any) => {
         e?.preventDefault();
-        Post(`/chat-messages/ask-ai/${workspace.id}`, { query: chatText }).then(() => {
-            setChatText('');
-            fetchChatMessages();
-        });
-    }, [workspace, chatText, fetchChatMessages])
+        sendChatMessage({ query: chatText });
+    }, [sendChatMessage, chatText])
 
     React.useEffect(() => fetchChatMessages(), [fetchChatMessages]);
 
     return <div>
         <div className='overflow-scroll p-3' style={{ height: 'calc(100vh - 120px)' }}>
             <div className='d-flex flex-column-reverse'>
-                {chatMessages.map((c) => (
+                {chatMessages && chatMessages.map((c) => (
                     <ChatBubble key={c.id} chatMessage={c} />
                 ))}
             </div>

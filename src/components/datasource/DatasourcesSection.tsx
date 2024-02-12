@@ -1,8 +1,7 @@
 import React from "react"
 import Button from 'react-bootstrap/Button';
-import { Get } from '@/src/ApiClient';
+import { useApiClient } from '@/src/ApiClient';
 import { Datasource } from "../../types/Datasource";
-import { AxiosResponse } from 'axios';
 import DatasourceTableRow from "./DatasourceTableRow";
 import CreateDatasourceModal from "./CreateDatasourceModal";
 import { FileEarmarkPlusFill } from "react-bootstrap-icons";
@@ -12,25 +11,18 @@ type Props = {
 }
 
 export default function DatasourcesSection(props: Props) {
-    const [datasources, setDatasources] = React.useState(Array<Datasource>());
     const [showCreateDatasourceModal, setShowCreateDatasourceModal] = React.useState(false);
-
-    const hideCreateDatasourceModal = () => setShowCreateDatasourceModal(false);
 
     const onShowCreateDatasourceModalButtonClicked = (e?: any) => {
         e?.preventDefault();
         setShowCreateDatasourceModal(true);
     }
+    const hideCreateDatasourceModal = () => setShowCreateDatasourceModal(false);
 
-    const fetchDatasources = React.useCallback(() => {
-        Get(`/datasource/${props.workspaceId}`).then((response: AxiosResponse) => {
-            const data = response.data as Array<Datasource>
-            setDatasources(data);
-        });
-    }, [props.workspaceId])
+    const { data: datasources, dispatch: fetchDatasources } = useApiClient<Array<Datasource>>('get', `/datasource/${props.workspaceId}`);
 
     React.useEffect(() => {
-        fetchDatasources()
+        fetchDatasources();
     }, [fetchDatasources]);
 
     return <div>
@@ -44,14 +36,14 @@ export default function DatasourcesSection(props: Props) {
             </div>
         </div>
 
-        <table className="table">
+        {datasources && <table className="table">
             <tbody>
                 {datasources.map((d, i) => (<DatasourceTableRow key={d.id}
                     datasource={d}
                     handleDatasourceDeleted={fetchDatasources} />
                 ))}
             </tbody>
-        </table>
+        </table>}
 
         <CreateDatasourceModal show={showCreateDatasourceModal}
             workspaceId={props.workspaceId}

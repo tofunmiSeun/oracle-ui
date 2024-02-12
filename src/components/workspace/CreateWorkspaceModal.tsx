@@ -2,7 +2,7 @@ import React from "react"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { Post } from "../../ApiClient";
+import { useApiClient } from "../../ApiClient";
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -20,14 +20,17 @@ export default function CreateWorkspaceModal(props: Props) {
         return title.length < 3;
     }, [title]);
 
-    const createWorkspace = React.useCallback((e?: any) => {
+    const onWorkspaceCreated = (workspaceId: string) => {
+        props.handleClose();
+        router.push(`/workspace/${workspaceId}`);
+    }
+    const createWorkspaceApiClient = useApiClient<string>('post', '/workspace', onWorkspaceCreated);
+    const { dispatch: createWorkspace } = createWorkspaceApiClient;
+
+    const onSubmitButtonClicked = React.useCallback((e?: any) => {
         e?.preventDefault();
-        Post('/workspace', { title, description }).then((response) => {
-            const workspaceId = response.data as string;
-            props.handleClose();
-            router.push(`/workspace/${workspaceId}`);
-        })
-    }, [title, description, props, router]);
+        createWorkspace({ title, description })
+    }, [title, description, createWorkspace]);
 
     return <Modal show={props.show} onHide={props.handleClose}>
         <Modal.Header closeButton>
@@ -52,7 +55,7 @@ export default function CreateWorkspaceModal(props: Props) {
         <Modal.Footer>
             <Button variant="primary" size="sm"
                 disabled={isSubmitButtonDisabled}
-                onClick={createWorkspace}>
+                onClick={onSubmitButtonClicked}>
                 Save
             </Button>
         </Modal.Footer>

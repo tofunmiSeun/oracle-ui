@@ -2,7 +2,7 @@ import React from "react"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { Post } from "../../ApiClient";
+import { useApiClient } from "../../ApiClient";
 import { Workspace } from "../../types/Workspace";
 
 type Props = {
@@ -26,13 +26,17 @@ export default function EditWorkspaceModal(props: Props) {
 
     }, [title, description, props.workspace]);
 
-    const editWorkspace = React.useCallback((e?: any) => {
+    const onWorkspaceEdited = () => {
+        props.handleClose();
+        props.onWorkspaceEdited();
+    }
+
+    const { dispatch: editWorkspace } = useApiClient('post', `/workspace/${props.workspace.id}`, onWorkspaceEdited);
+
+    const onSubmitButtonClicked = React.useCallback((e?: any) => {
         e?.preventDefault();
-        Post(`/workspace/${props.workspace.id}`, { title, description }).then(() => {
-            props.handleClose();
-            props.onWorkspaceEdited();
-        })
-    }, [title, description, props]);
+        editWorkspace({ title, description })
+    }, [title, description, editWorkspace]);
 
     return <Modal show={props.show} onHide={props.handleClose}>
         <Modal.Header closeButton>
@@ -57,7 +61,7 @@ export default function EditWorkspaceModal(props: Props) {
         <Modal.Footer>
             <Button variant="primary" size="sm"
                 disabled={isSubmitButtonDisabled}
-                onClick={editWorkspace}>
+                onClick={onSubmitButtonClicked}>
                 Save
             </Button>
         </Modal.Footer>
